@@ -15,18 +15,18 @@
 
 
 
-<meta name="description" content="Spring微服务之-软负载中心@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server">
-<meta name="keywords" content="微服务">
+<meta name="description" content="@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server 192.168.1.11:80">
+<meta name="keywords" content="微服务,软负载中心">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Spring微服务之-软负载中心">
-<meta property="og:url" content="http://teneous.github.io/2019/07/02/Spinrg">
+<meta property="og:url" content="http://teneous.github.io/2019/07/03/SpinrgMicroService_Eureka/index.html">
 <meta property="og:site_name" content="Syoka">
-<meta property="og:description" content="Spring微服务之-软负载中心@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server">
+<meta property="og:description" content="@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server 192.168.1.11:80">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-02T09:56:48.000Z">
+<meta property="og:updated_time" content="2019-07-03T05:25:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring微服务之-软负载中心">
-<meta name="twitter:description" content="Spring微服务之-软负载中心@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server">
+<meta name="twitter:description" content="@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server 192.168.1.11:80">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -74,7 +74,7 @@
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: 
+        search: true
     }
 </script>
 
@@ -106,6 +106,13 @@
 
         
 
+        
+            <form id="search-form">
+            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
+            <i class="fa fa-times" onclick="resetSearch()"></i>
+            </form>
+            <div id="local-search-result"></div>
+            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
         
 
 
@@ -157,13 +164,7 @@
                     <nav class="header-menu">
                         <ul>
                         
-                            <li><a href="/">主页</a></li>
-                        
-                            <li><a href="/archives/">所有文章</a></li>
-                        
-                            <li><a href="/tags/">标签云</a></li>
-                        
-                            <li><a href="/about/">关于我</a></li>
+                            <li><a href="/archives/">文章</a></li>
                         
                         </ul>
                     </nav>
@@ -183,7 +184,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+                        <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/微服务/">微服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/软负载中心/">软负载中心</a></li></ul>
                     </div>
                 </section>
                 
@@ -232,13 +233,7 @@
             <nav class="header-menu">
                 <ul>
                 
-                    <li><a href="/">主页</a></li>
-                
-                    <li><a href="/archives/">所有文章</a></li>
-                
-                    <li><a href="/tags/">标签云</a></li>
-                
-                    <li><a href="/about/">关于我</a></li>
+                    <li><a href="/archives/">文章</a></li>
                 
                 <div class="clearfix"></div>
                 </ul>
@@ -258,11 +253,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Spinrg????????Eureka" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-SpinrgMicroService_Eureka" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/07/02/Spinrg????????Eureka/" class="article-date">
-      <time datetime="2019-07-02T09:55:09.000Z" itemprop="datePublished">2019-07-02</time>
+      <a href="/2019/07/03/SpinrgMicroService_Eureka/" class="article-date">
+      <time datetime="2019-07-03T05:20:49.000Z" itemprop="datePublished">2019-07-03</time>
 </a>
 
 
@@ -285,10 +280,14 @@
       
       <div class="article-info article-info-post">
         
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/微服务/">微服务</a>
+    </div>
+
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li></ul>
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软负载中心/">软负载中心</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -298,7 +297,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <h3 id="Spring微服务之-软负载中心"><a href="#Spring微服务之-软负载中心" class="headerlink" title="Spring微服务之-软负载中心"></a>Spring微服务之-软负载中心</h3><p>@(syoka) </p>
+        <p>@(syoka) </p>
 <h6 id="序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><a href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑" class="headerlink" title="序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑"></a>序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</h6><hr>
 <h4 id="软负载中心出现的契机"><a href="#软负载中心出现的契机" class="headerlink" title="软负载中心出现的契机"></a>软负载中心出现的契机</h4><p>如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      server 192.168.1.11:8080;</span><br><span class="line">      server 192.168.1.22:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -355,13 +354,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/07/02/Spinrg????????Eureka/">Spring微服务之-软负载中心</a></p>
+        <p><span>本文标题:</span><a href="/2019/07/03/SpinrgMicroService_Eureka/">Spring微服务之-软负载中心</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Syoka</a></p>
-        <p><span>发布时间:</span>2019-07-02, 17:55:09</p>
-        <p><span>最后更新:</span>2019-07-02, 17:56:48</p>
+        <p><span>发布时间:</span>2019-07-03, 13:20:49</p>
+        <p><span>最后更新:</span>2019-07-03, 13:25:22</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/07/02/Spinrg????????Eureka/" title="Spring微服务之-软负载中心">http://teneous.github.io/2019/07/02/Spinrg????????Eureka/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://teneous.github.io/2019/07/02/Spinrg????????Eureka/　　作者: Syoka" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/07/03/SpinrgMicroService_Eureka/" title="Spring微服务之-软负载中心">http://teneous.github.io/2019/07/03/SpinrgMicroService_Eureka/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://teneous.github.io/2019/07/03/SpinrgMicroService_Eureka/　　作者: Syoka" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -377,7 +376,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Spring微服务之-软负载中心"><span class="toc-number">1.</span> <span class="toc-text">Spring微服务之-软负载中心</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载中心出现的契机"><span class="toc-number">1.1.</span> <span class="toc-text">软负载中心出现的契机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载服务内聚的构建（以下统称注册中心）"><span class="toc-number">1.2.</span> <span class="toc-text">软负载服务内聚的构建（以下统称注册中心）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><span class="toc-number">1.2.1.</span> <span class="toc-text">想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><span class="toc-number">1.2.2.</span> <span class="toc-text">光有结构还不够，还需了解注册中心服务框架如何与客户端结合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载对服务状态的检测"><span class="toc-number">1.3.</span> <span class="toc-text">软负载对服务状态的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载的性能策略"><span class="toc-number">1.4.</span> <span class="toc-text">软负载的性能策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册中心的集群化"><span class="toc-number">1.5.</span> <span class="toc-text">注册中心的集群化</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><span class="toc-number">1.</span> <span class="toc-text">序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载中心出现的契机"><span class="toc-number"></span> <span class="toc-text">软负载中心出现的契机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载服务内聚的构建（以下统称注册中心）"><span class="toc-number"></span> <span class="toc-text">软负载服务内聚的构建（以下统称注册中心）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><span class="toc-number"></span> <span class="toc-text">想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><span class="toc-number"></span> <span class="toc-text">光有结构还不够，还需了解注册中心服务框架如何与客户端结合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载对服务状态的检测"><span class="toc-number"></span> <span class="toc-text">软负载对服务状态的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载的性能策略"><span class="toc-number"></span> <span class="toc-text">软负载的性能策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册中心的集群化"><span class="toc-number"></span> <span class="toc-text">注册中心的集群化</span></a>
         
     </div>
     <style>
@@ -443,7 +442,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/02/Spinrg????????Eureka/">Spring微服务之-软负载中心</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/03/SpinrgMicroService_Eureka/">Spring微服务之-软负载中心</a></li></ul>
 
 
 
@@ -525,7 +524,7 @@
             
              archives: ".archive-article-title", 
              miniArchives: "a.post-list-link", 
-            
+             menu: ".header-menu a", 
              friends: "#js-friends a", 
              socail: ".social a" 
         }
