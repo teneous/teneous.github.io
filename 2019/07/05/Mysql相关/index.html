@@ -14,17 +14,19 @@
 <meta name="author" content="Syoka">
 
 
-    
-    
 
-
-<meta property="og:type" content="website">
-<meta property="og:title" content="Syoka">
-<meta property="og:url" content="http://teneous.github.io/index.html">
+<meta name="description" content="@(syoka) 数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别     设计用分辨率   数据库锁机制 redo undo mvcc 索引结构 集群机制 分库分表原理 常用函数  非关系数据库以Redis为例子 redis原理 数据结构+部分底层架构 主从 哨兵 集群 分布式锁（redis）  废话不多说，直接进入正题 ACID事物特性说到关系型数据库">
+<meta name="keywords" content="Mysql,事物,分库分表,索引结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据库总结大纲">
+<meta property="og:url" content="http://teneous.github.io/2019/07/05/Mysql相关/index.html">
 <meta property="og:site_name" content="Syoka">
+<meta property="og:description" content="@(syoka) 数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别     设计用分辨率   数据库锁机制 redo undo mvcc 索引结构 集群机制 分库分表原理 常用函数  非关系数据库以Redis为例子 redis原理 数据结构+部分底层架构 主从 哨兵 集群 分布式锁（redis）  废话不多说，直接进入正题 ACID事物特性说到关系型数据库">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-05T07:51:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Syoka">
+<meta name="twitter:title" content="数据库总结大纲">
+<meta name="twitter:description" content="@(syoka) 数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别     设计用分辨率   数据库锁机制 redo undo mvcc 索引结构 集群机制 分库分表原理 常用函数  非关系数据库以Redis为例子 redis原理 数据结构+部分底层架构 主从 哨兵 集群 分布式锁（redis）  废话不多说，直接进入正题 ACID事物特性说到关系型数据库">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -52,13 +54,11 @@
 <link rel="stylesheet" href="/css/style.css">
 
 
-    <style> .article { opacity: 0;} </style>
-
 
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Syoka</title>
+<title>数据库总结大纲 | Syoka</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -67,8 +67,8 @@
     var yiliaConfig = {
         fancybox: true,
         animate: true,
-        isHome: true,
-        isPost: false,
+        isHome: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
         isCategory: false,
@@ -253,9 +253,7 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
-  
-    <article id="post-Mysql相关" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-Mysql相关" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2019/07/05/Mysql相关/" class="article-date">
@@ -273,12 +271,27 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/05/Mysql相关/">数据库总结大纲</a>
+    <h1 class="article-title" itemprop="name">
+      数据库总结大纲
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/数据库相关/">数据库相关</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事物/">事物</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分库分表/">分库分表</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/索引结构/">索引结构</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -471,139 +484,85 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/数据库相关/">数据库相关</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/事物/">事物</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/分库分表/">分库分表</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/索引结构/">索引结构</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
   
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Spring微服务之-软负载中心" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2019/07/03/Spring微服务之-软负载中心/" class="article-date">
-      <time datetime="2019-07-03T05:20:49.000Z" itemprop="datePublished">2019-07-03</time>
-</a>
-
-
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2019/07/05/Mysql相关/">数据库总结大纲</a></p>
+        <p><span>文章作者:</span><a href="/" title="回到主页">Syoka</a></p>
+        <p><span>发布时间:</span>2019-07-05, 14:53:29</p>
+        <p><span>最后更新:</span>2019-07-05, 15:51:29</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2019/07/05/Mysql相关/" title="数据库总结大纲">http://teneous.github.io/2019/07/05/Mysql相关/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://teneous.github.io/2019/07/05/Mysql相关/　　作者: Syoka" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+        </p>
     </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
+
+
+
+    <nav id="article-nav">
         
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/03/Spring微服务之-软负载中心/">Spring微服务之-软负载中心</a>
-    </h1>
-  
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/07/03/Spring微服务之-软负载中心/">
+                    Spring微服务之-软负载中心
+                </a>
+            </div>
+        
+    </nav>
 
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-          
-        <p>@(syoka) </p>
-<h6 id="序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><a href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑" class="headerlink" title="序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑"></a>序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</h6><hr>
-<h4 id="软负载中心出现的契机"><a href="#软负载中心出现的契机" class="headerlink" title="软负载中心出现的契机"></a>软负载中心出现的契机</h4><p>如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      server 192.168.1.11:8080;</span><br><span class="line">      server 192.168.1.22:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>从这里体现出了负载中心的第一个特性，服务内聚</strong></p>
-<p>在内部系统或者服务少的情况下，上述方法确实能够有效的解决问题（可控制服务出入口，适用支付金融业），但是面对分布式环境中对多服务管理的话这么做有两个问题:</p>
-<ol>
-<li><p>复杂:新增服务不是通过实例启动自动完成，而是需要手动维护。且直接映射物理服务，这对于DevOps人员来说并不友好。</p>
-</li>
-<li><p>单点故障：一旦负载中心挂了，其余所有消费端获取服务地址都将失败，对于此类问题，可以考虑加入一个【从负载均衡器】，在主负载器出现问题时进行故障切换。</p>
-</li>
-</ol>
-<p><strong>因此这里我们要解决的第一个痛点就是一个自动检查新老服务上下线的软负载中心(内聚体现:注册中心)</strong></p>
-<h4 id="软负载服务内聚的构建（以下统称注册中心）"><a href="#软负载服务内聚的构建（以下统称注册中心）" class="headerlink" title="软负载服务内聚的构建（以下统称注册中心）"></a>软负载服务内聚的构建（以下统称注册中心）</h4><h5 id="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><a href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据" class="headerlink" title="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"></a>想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</h5><p>从文章开头的静态地址来看<br>，我们可以看出</p>
-<ul>
-<li>必须提供服务端的物理地址ip以及端口<br>（一般为了防止直接对物理地址的操作，会再抽象一层逻辑服务名）</li>
-<li>为确保服务提供者的高可用，提供者一般也是采用集群部署，因此我们使用GroupId来标识一个集群</li>
-</ul>
-<p>最终从结构上来说：<br><strong>我们需要一个groupid来充当一组服务的逻辑名，每组groupid里存放着每个实例的物理地址以及端口</strong></p>
-<h5 id="光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><a href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合" class="headerlink" title="光有结构还不够，还需了解注册中心服务框架如何与客户端结合"></a>光有结构还不够，还需了解注册中心服务框架如何与客户端结合</h5><p>这里给出2钟:</p>
-<ol>
-<li>注册中心框架以jar包的方式和服务端一起启动，由客户端发起RESTFUL请求到注册中心服务端完成注册（eureka就是采用此方案）。</li>
-<li>注册中心框架绑定到容器中。服务被在容器中启动，可以被注册中心感知。</li>
-</ol>
-<h4 id="软负载对服务状态的检测"><a href="#软负载对服务状态的检测" class="headerlink" title="软负载对服务状态的检测"></a>软负载对服务状态的检测</h4><p>注册中心需要感知所有服务的当前状态，防止向消费者返回已经下线或是有问题的服务地址，这个需要提供端定时向注册中心汇报自己的当前状态（称为:心跳包）</p>
-<p>当然可能因为网络延时或者当前软负载中心负载很高，注册中心不能及时收到心跳包。此时不应该直接剔除服务并删除注册列表，毕竟注册一个服务所耗的资源还是很高的。因此注册中心应该有一定弹性，在没有收到心跳包也应该在一定时间内保留注册信息，并另开一个线程监视器再一定时间内继续监视，如还收不到心跳包，则判定下线。</p>
-<h4 id="软负载的性能策略"><a href="#软负载的性能策略" class="headerlink" title="软负载的性能策略"></a>软负载的性能策略</h4><p>服务提供者将信息注册到注册中心，如果注册中心出问题，又没有容灾策略，那么所有消费者都获取不到服务提供者的位置。因此，所有服务消费者会在本地缓存一份。</p>
-<p>这样做的好处：</p>
-<ol>
-<li>注册中心挂了也可以使用本地缓存直接请求。</li>
-<li>提升了效率（不用每次请求都向注册中心获取服务地址，降低注册中心的负载，避免网络资源的浪费）</li>
-</ol>
-<p>客户端本地缓存:注册中心服务注册表发生变换时需要通知客户端刷新本地缓存，此处使用全量更新(实现简单)，还是增量更新(实现复杂)是可以权衡的。eureka采用增量更新。</p>
-<p><strong>第二个痛点就是容灾策略，采用集群部署来解决</strong></p>
-<h4 id="注册中心的集群化"><a href="#注册中心的集群化" class="headerlink" title="注册中心的集群化"></a>注册中心的集群化</h4><p>注册中心的统一化管理主要有两种实现方式</p>
-<p> <strong>1.通过相互注册的同步方式(eureka就是采用这种方式)。</strong></p>
-<p>例:A，B两个注册中心，把B当成一个服务提供者注册到A中，A也当成提供者注册在B中。这样两个注册中心就可保持同步，以此类推，有N个注册中心那么，每个注册中心需要完成N-1次注册即可。</p>
-<p>这么做的好处是可以复用功能，也易于理解。但是从侧面也反映出它的缺点，同步效率会大大降低。<br>为了解决效率的问题，并且接受部分服务同步延时，可以选择类似batch批量同步。</p>
-<p><strong>2.通过数据内聚的管理方式</strong></p>
-<p>将所有的地址数据聚合在一起，所有注册中心从聚合服务获取，可以保证软负载服务的无状态，但是也得考虑如果聚合服务出现故障时的备用策略。</p>
-<p>感觉自己写的很捞，后面有时间再改改吧。</p>
-<hr>
-<p>参考文档:</p>
-<ul>
-<li>大型网站系统与JAVA中间件实践（曾宪杰）</li>
-<li>Spring Microservices in Action-Manning Publications (John Carnell)</li>
-<li>SpringCloud 微服务实战（翟永超）</li>
-</ul>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/微服务/">微服务</a>
-    </div>
-
-
-      
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软负载中心/">软负载中心</a></li></ul>
-    </div>
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
   
 </article>
 
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库总结大纲"><span class="toc-number">1.</span> <span class="toc-text">数据库总结大纲</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关系型数据库以Mysql为例子"><span class="toc-number">1.1.</span> <span class="toc-text">关系型数据库以Mysql为例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-number">2.</span> <span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#非关系数据库以Redis为例子"><span class="toc-number">2.0.1.</span> <span class="toc-text">非关系数据库以Redis为例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ACID事物特性"><span class="toc-number">2.0.2.</span> <span class="toc-text">ACID事物特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ACID术语简介"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">ACID术语简介</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#知识点1-1-数据隔离级别"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">知识点1.1 数据隔离级别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#知识点1-2-mysql如何确保各个特性"><span class="toc-number">2.0.2.3.</span> <span class="toc-text">知识点1.2 mysql如何确保各个特性</span></a></li></ol></li></ol></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"数据库总结大纲　| Syoka　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
 
 
 
@@ -611,9 +570,33 @@
 
 
 
+    
 
-  
-  
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/07/03/Spring微服务之-软负载中心/" title="下一篇: Spring微服务之-软负载中心">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/07/05/Mysql相关/">数据库总结大纲</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/03/Spring微服务之-软负载中心/">Spring微服务之-软负载中心</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
@@ -667,10 +650,6 @@
         })
     </script>
 
-
-    
-
-     
 
 
 
