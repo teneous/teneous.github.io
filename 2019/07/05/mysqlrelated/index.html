@@ -15,18 +15,17 @@
 
 
 
-<meta name="description" content="@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server 192.168.1.11:80">
-<meta name="keywords" content="微服务,软负载中心">
+<meta name="description" content="数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别     设计用分辨率 颜色 字体 图标 控件 导航 按钮 表单 表格 下拉列表框 文本框 搜索框 列表项 浮层     数据库锁机制 redo undo mvcc 索引结构 集群机制 分库分表原理 常用函数  非关系数据库以Redis为例子 redis原理 数据结构+部分底层架构 主从 哨兵 集群 分布式锁">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Spring微服务之-软负载中心">
-<meta property="og:url" content="http://teneous.github.io/2019/07/03/SpinrgMicroService_Eureka/index.html">
+<meta property="og:title" content="Syoka">
+<meta property="og:url" content="http://teneous.github.io/2019/07/05/mysqlrelated/index.html">
 <meta property="og:site_name" content="Syoka">
-<meta property="og:description" content="@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server 192.168.1.11:80">
+<meta property="og:description" content="数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别     设计用分辨率 颜色 字体 图标 控件 导航 按钮 表单 表格 下拉列表框 文本框 搜索框 列表项 浮层     数据库锁机制 redo undo mvcc 索引结构 集群机制 分库分表原理 常用函数  非关系数据库以Redis为例子 redis原理 数据结构+部分底层架构 主从 哨兵 集群 分布式锁">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-03T05:25:22.000Z">
+<meta property="og:updated_time" content="2019-07-05T06:50:01.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Spring微服务之-软负载中心">
-<meta name="twitter:description" content="@(syoka)  序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑 软负载中心出现的契机如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端 1234&amp;#123;      server 192.168.1.11:80">
+<meta name="twitter:title" content="Syoka">
+<meta name="twitter:description" content="数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别     设计用分辨率 颜色 字体 图标 控件 导航 按钮 表单 表格 下拉列表框 文本框 搜索框 列表项 浮层     数据库锁机制 redo undo mvcc 索引结构 集群机制 分库分表原理 常用函数  非关系数据库以Redis为例子 redis原理 数据结构+部分底层架构 主从 哨兵 集群 分布式锁">
 
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
@@ -58,7 +57,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Spring微服务之-软负载中心 | Syoka</title>
+<title>Syoka</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -253,11 +252,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-SpinrgMicroService_Eureka" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-mysqlrelated" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/07/03/SpinrgMicroService_Eureka/" class="article-date">
-      <time datetime="2019-07-03T05:20:49.000Z" itemprop="datePublished">2019-07-03</time>
+      <a href="/2019/07/05/mysqlrelated/" class="article-date">
+      <time datetime="2019-07-05T06:50:59.745Z" itemprop="datePublished">2019-07-05</time>
 </a>
 
 
@@ -268,84 +267,102 @@
       <input type="hidden" class="isFancy" />
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      Spring微服务之-软负载中心
-    </h1>
-  
-
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/微服务/">微服务</a>
-    </div>
-
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/微服务/">微服务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软负载中心/">软负载中心</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
-    
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>@(syoka) </p>
-<h6 id="序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><a href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑" class="headerlink" title="序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑"></a>序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</h6><hr>
-<h4 id="软负载中心出现的契机"><a href="#软负载中心出现的契机" class="headerlink" title="软负载中心出现的契机"></a>软负载中心出现的契机</h4><p>如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      server 192.168.1.11:8080;</span><br><span class="line">      server 192.168.1.22:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>从这里体现出了负载中心的第一个特性，服务内聚</strong></p>
-<p>在内部系统或者服务少的情况下，上述方法确实能够有效的解决问题（可控制服务出入口，适用支付金融业），但是面对分布式环境中对多服务管理的话这么做有两个问题:</p>
-<ol>
-<li><p>复杂:新增服务不是通过实例启动自动完成，而是需要手动维护。且直接映射物理服务，这对于DevOps人员来说并不友好。</p>
-</li>
-<li><p>单点故障：一旦负载中心挂了，其余所有消费端获取服务地址都将失败，对于此类问题，可以考虑加入一个【从负载均衡器】，在主负载器出现问题时进行故障切换。</p>
+        <h2 id="数据库总结大纲"><a href="#数据库总结大纲" class="headerlink" title="数据库总结大纲"></a>数据库总结大纲</h2><h3 id="关系型数据库以Mysql为例子"><a href="#关系型数据库以Mysql为例子" class="headerlink" title="关系型数据库以Mysql为例子"></a>关系型数据库以Mysql为例子</h3><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a name="目录">目录</a></h2><ol>
+<li><a href="#ACID事物特性">ACID</a><ol start="11">
+<li><a href="#ACID术语简介">ACID术语简介</a></li>
+<li><a href="#事物隔离级别">事物隔离级别</a></li>
+</ol>
 </li>
 </ol>
-<p><strong>因此这里我们要解决的第一个痛点就是一个自动检查新老服务上下线的软负载中心(内聚体现:注册中心)</strong></p>
-<h4 id="软负载服务内聚的构建（以下统称注册中心）"><a href="#软负载服务内聚的构建（以下统称注册中心）" class="headerlink" title="软负载服务内聚的构建（以下统称注册中心）"></a>软负载服务内聚的构建（以下统称注册中心）</h4><h5 id="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><a href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据" class="headerlink" title="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"></a>想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</h5><p>从文章开头的静态地址来看<br>，我们可以看出</p>
-<ul>
-<li>必须提供服务端的物理地址ip以及端口<br>（一般为了防止直接对物理地址的操作，会再抽象一层逻辑服务名）</li>
-<li>为确保服务提供者的高可用，提供者一般也是采用集群部署，因此我们使用GroupId来标识一个集群</li>
-</ul>
-<p>最终从结构上来说：<br><strong>我们需要一个groupid来充当一组服务的逻辑名，每组groupid里存放着每个实例的物理地址以及端口</strong></p>
-<h5 id="光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><a href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合" class="headerlink" title="光有结构还不够，还需了解注册中心服务框架如何与客户端结合"></a>光有结构还不够，还需了解注册中心服务框架如何与客户端结合</h5><p>这里给出2钟:</p>
 <ol>
-<li>注册中心框架以jar包的方式和服务端一起启动，由客户端发起RESTFUL请求到注册中心服务端完成注册（eureka就是采用此方案）。</li>
-<li>注册中心框架绑定到容器中。服务被在容器中启动，可以被注册中心感知。</li>
+<li><a href="#设计用分辨率">设计用分辨率</a></li>
+<li><a href="#颜色">颜色</a></li>
+<li><a href="#字体">字体</a></li>
+<li><a href="#图标">图标</a></li>
+<li><a href="#控件">控件</a><ol>
+<li><a href="#导航">导航</a></li>
+<li><a href="#按钮">按钮</a></li>
+<li><a href="#表单">表单</a></li>
+<li><a href="#表格">表格</a></li>
+<li><a href="#下拉列表框">下拉列表框</a></li>
+<li><a href="#文本框">文本框</a></li>
+<li><a href="#搜索框">搜索框</a></li>
+<li><a href="#列表项">列表项</a></li>
+<li><a href="#浮层">浮层</a></li>
 </ol>
-<h4 id="软负载对服务状态的检测"><a href="#软负载对服务状态的检测" class="headerlink" title="软负载对服务状态的检测"></a>软负载对服务状态的检测</h4><p>注册中心需要感知所有服务的当前状态，防止向消费者返回已经下线或是有问题的服务地址，这个需要提供端定时向注册中心汇报自己的当前状态（称为:心跳包）</p>
-<p>当然可能因为网络延时或者当前软负载中心负载很高，注册中心不能及时收到心跳包。此时不应该直接剔除服务并删除注册列表，毕竟注册一个服务所耗的资源还是很高的。因此注册中心应该有一定弹性，在没有收到心跳包也应该在一定时间内保留注册信息，并另开一个线程监视器再一定时间内继续监视，如还收不到心跳包，则判定下线。</p>
-<h4 id="软负载的性能策略"><a href="#软负载的性能策略" class="headerlink" title="软负载的性能策略"></a>软负载的性能策略</h4><p>服务提供者将信息注册到注册中心，如果注册中心出问题，又没有容灾策略，那么所有消费者都获取不到服务提供者的位置。因此，所有服务消费者会在本地缓存一份。</p>
-<p>这样做的好处：</p>
-<ol>
-<li>注册中心挂了也可以使用本地缓存直接请求。</li>
-<li>提升了效率（不用每次请求都向注册中心获取服务地址，降低注册中心的负载，避免网络资源的浪费）</li>
+</li>
 </ol>
-<p>客户端本地缓存:注册中心服务注册表发生变换时需要通知客户端刷新本地缓存，此处使用全量更新(实现简单)，还是增量更新(实现复杂)是可以权衡的。eureka采用增量更新。</p>
-<p><strong>第二个痛点就是容灾策略，采用集群部署来解决</strong></p>
-<h4 id="注册中心的集群化"><a href="#注册中心的集群化" class="headerlink" title="注册中心的集群化"></a>注册中心的集群化</h4><p>注册中心的统一化管理主要有两种实现方式</p>
-<p> <strong>1.通过相互注册的同步方式(eureka就是采用这种方式)。</strong></p>
-<p>例:A，B两个注册中心，把B当成一个服务提供者注册到A中，A也当成提供者注册在B中。这样两个注册中心就可保持同步，以此类推，有N个注册中心那么，每个注册中心需要完成N-1次注册即可。</p>
-<p>这么做的好处是可以复用功能，也易于理解。但是从侧面也反映出它的缺点，同步效率会大大降低。<br>为了解决效率的问题，并且接受部分服务同步延时，可以选择类似batch批量同步。</p>
-<p><strong>2.通过数据内聚的管理方式</strong></p>
-<p>将所有的地址数据聚合在一起，所有注册中心从聚合服务获取，可以保证软负载服务的无状态，但是也得考虑如果聚合服务出现故障时的备用策略。</p>
-<p>感觉自己写的很捞，后面有时间再改改吧。</p>
-<hr>
-<p>参考文档:</p>
 <ul>
-<li>大型网站系统与JAVA中间件实践（曾宪杰）</li>
-<li>Spring Microservices in Action-Manning Publications (John Carnell)</li>
-<li>SpringCloud 微服务实战（翟永超）</li>
+<li>数据库锁机制</li>
+<li>redo undo mvcc</li>
+<li>索引结构</li>
+<li>集群机制</li>
+<li>分库分表原理</li>
+<li>常用函数</li>
 </ul>
+<h4 id="非关系数据库以Redis为例子"><a href="#非关系数据库以Redis为例子" class="headerlink" title="非关系数据库以Redis为例子"></a>非关系数据库以Redis为例子</h4><ul>
+<li>redis原理</li>
+<li>数据结构+部分底层架构</li>
+<li>主从 哨兵 集群</li>
+<li>分布式锁（redis）</li>
+</ul>
+<p>废话不多说，直接进入正题</p>
+<h4 id="ACID事物特性"><a href="#ACID事物特性" class="headerlink" title="ACID事物特性"></a><a name="ACID事物特性">ACID事物特性</a></h4><p>说到关系型数据库，那么不得不说它的特点了，那便是事物（ACID）</p>
+<h5 id="ACID术语简介"><a href="#ACID术语简介" class="headerlink" title="ACID术语简介"></a><a name="ACID术语简介">ACID术语简介</a></h5><ul>
+<li><p>Atomic 原子性：在一个事物中，所有操作要么全部成功，要么全部失败</p>
+<p>例：A-&gt;B转账，A减少100元，则B必须增加100元</p>
+</li>
+<li><p>Consistency 一致性 必须保持业务数据的整体一致性</p>
+<p>例：A和B的总资产是1000元，不管A-&gt;B还是B-&gt;A，最终总额依然是1000元</p>
+</li>
+<li><p>Isolation 隔离性 在并发情况下，各个事物相互隔离不能干扰，以一种类似串性的方式执行</p>
+<p>例：同一时刻事物A和事物B同时向C转账100元，A在转账时，B不得进行转账</p>
+</li>
+<li><p>Durability 持久性 一旦事物提交成功，即使宕机断点恢复后，此数据依然能被确保已经被修改</p>
+<p>例：A转账100元成功到B，此时服务器停电了，在启动的时候B查询的这100元肯定已经到账</p>
+</li>
+</ul>
+<p><strong>事物的核心在于一致性，其中AID都是为了保证数据的一致性</strong></p>
+<h5 id="知识点1-1-数据隔离级别"><a href="#知识点1-1-数据隔离级别" class="headerlink" title="知识点1.1 数据隔离级别"></a>知识点1.1 数据隔离级别</h5><p>mysql 提供了4种数据隔离级别，他们分别是:</p>
+<ul>
+<li>读未提交 ru (事物A可以读到事物B尚未提交的修改)</li>
+<li>读已提交 rc (事物A只能读到事物B已经提交的修改)</li>
+<li>可重复度 rr (Mysql事物默认级别，同一事物A在任意时间读到的数据应该一致）</li>
+<li>序列化 se (事物最高级别，串性执行）</li>
+</ul>
+<p>结论:<br>越往下，越越安全，效率越低<br>越往上，越不安全，效率越底</p>
+<p>伴随着事物并发，会存在以下三种问题</p>
+<ul>
+<li>脏读</li>
+<li>不可重复读</li>
+<li>幻读</li>
+<li>一二类数据更新丢失</li>
+</ul>
+<p>我们逐一进行分析：</p>
+<ol>
+<li>什么是脏读?<br>事物A读取了B尚未提交的事物。</li>
+</ol>
+<p>情境分析</p>
+<p>时间线 | 事物 | 余额 | 转进 | 转出<br>-|-|-|-<br>T1 | A读取余额100元 | 100 |  |<br>T2 | B读取余额100元 | 100 | 100 |<br>T3 | B转入账户100元 | 200 | 100 |<br><strong>T4</strong> | A转出账户50元 | 150 | | 50<br>T5 | B事物回滚 | 100 |  |<br>T6 | A事物提交 | 150 | |</p>
+<p><strong>问题出在T4,T5时刻，A事物读取到了B事物尚未提交的事物，一旦B后面发生了回滚，A并不知情，导致最终变为脏数据</strong></p>
+<p>附：读已提交(包含)以上级别可以防止脏读</p>
+<ol start="2">
+<li>什么是不可重复读？<br>事物A在不同时间读取同一数据返回不同结果</li>
+</ol>
+<p>情境分析</p>
+<p>时间线 | 事物 | 余额 | 转进 | 转出<br>-|-|-|-<br>T1 | A读取余额100元 | <strong>100</strong> |  |<br>T2 | B读取余额100元 | 100 |  |<br>T3 | B事物提交 | 200 | 100 |<br><strong>T4</strong> | A读取余额100元 | <strong>200</strong> |  |<br><strong>问题出T3,T4时刻，在事物A期间内，事物B对同一条数据发生了修改且提交成功，最终导致事物A再次读取余额发现两次读取数据不一致</strong></p>
+<ol start="3">
+<li>什么是幻读？<br>事物A在不同时间读取同一数据返回不同结果</li>
+</ol>
+<p>情境分析</p>
+<p>时间线 | 事物 | 余额 | 转进 | 转出<br>-|-|-|-<br>T1 | A查询今天有没有交易 | |  |<br>T2 | B发生一笔转账100元 | 100 | 100 |<br>T3 | B事物提交 | 100 |  |<br>T4 | A查询再次查询发现有交易了 | | |</p>
+<p><strong>问题出T3,T4时刻，幻读多发生在先查后插。先查询没有，准备插入的时候发现又有了</strong></p>
+<p>区别:幻读看似和不可重复读有点类似，实则不一样，幻读针对是不同数据，是读取数据的条数发生变化，不可重复读则是对同一条数据的变化</p>
+<p>序列化可防止</p>
+<h5 id="知识点1-2-mysql如何确保各个特性"><a href="#知识点1-2-mysql如何确保各个特性" class="headerlink" title="知识点1.2 mysql如何确保各个特性"></a>知识点1.2 mysql如何确保各个特性</h5><p>问题点1:mysql是基于什么方式实现上述的ACID？<br>为了解决上述的疑问，我们引出知识点2和知识点3</p>
 
       
     </div>
@@ -354,13 +371,13 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2019/07/03/SpinrgMicroService_Eureka/">Spring微服务之-软负载中心</a></p>
+        <p><span>本文标题:</span><a href="/2019/07/05/mysqlrelated/"></a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Syoka</a></p>
-        <p><span>发布时间:</span>2019-07-03, 13:20:49</p>
-        <p><span>最后更新:</span>2019-07-03, 13:25:22</p>
+        <p><span>发布时间:</span>2019-07-05, 14:50:59</p>
+        <p><span>最后更新:</span>2019-07-05, 14:50:01</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2019/07/03/SpinrgMicroService_Eureka/" title="Spring微服务之-软负载中心">http://teneous.github.io/2019/07/03/SpinrgMicroService_Eureka/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://teneous.github.io/2019/07/03/SpinrgMicroService_Eureka/　　作者: Syoka" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2019/07/05/mysqlrelated/" title="">http://teneous.github.io/2019/07/05/mysqlrelated/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://teneous.github.io/2019/07/05/mysqlrelated/　　作者: Syoka" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
@@ -372,12 +389,12 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/07/05/mysqlrelated/">
-                    
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/07/03/SpinrgMicroService_Eureka/">
+                    Spring微服务之-软负载中心
                 </a>
             </div>
-        
         
     </nav>
 
@@ -387,7 +404,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><span class="toc-number">1.</span> <span class="toc-text">序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载中心出现的契机"><span class="toc-number"></span> <span class="toc-text">软负载中心出现的契机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载服务内聚的构建（以下统称注册中心）"><span class="toc-number"></span> <span class="toc-text">软负载服务内聚的构建（以下统称注册中心）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><span class="toc-number"></span> <span class="toc-text">想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><span class="toc-number"></span> <span class="toc-text">光有结构还不够，还需了解注册中心服务框架如何与客户端结合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载对服务状态的检测"><span class="toc-number"></span> <span class="toc-text">软负载对服务状态的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载的性能策略"><span class="toc-number"></span> <span class="toc-text">软负载的性能策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册中心的集群化"><span class="toc-number"></span> <span class="toc-text">注册中心的集群化</span></a>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库总结大纲"><span class="toc-number">1.</span> <span class="toc-text">数据库总结大纲</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关系型数据库以Mysql为例子"><span class="toc-number">1.1.</span> <span class="toc-text">关系型数据库以Mysql为例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#目录"><span class="toc-number">2.</span> <span class="toc-text">目录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#非关系数据库以Redis为例子"><span class="toc-number">2.0.1.</span> <span class="toc-text">非关系数据库以Redis为例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ACID事物特性"><span class="toc-number">2.0.2.</span> <span class="toc-text">ACID事物特性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#ACID术语简介"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">ACID术语简介</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#知识点1-1-数据隔离级别"><span class="toc-number">2.0.2.2.</span> <span class="toc-text">知识点1.1 数据隔离级别</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#知识点1-2-mysql如何确保各个特性"><span class="toc-number">2.0.2.3.</span> <span class="toc-text">知识点1.2 mysql如何确保各个特性</span></a></li></ol></li></ol></li></ol></li></ol>
         
     </div>
     <style>
@@ -423,7 +440,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Spring微服务之-软负载中心　| Syoka　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"　| Syoka　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -443,15 +460,15 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/07/05/mysqlrelated/" title="上一篇: ">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2019/07/03/SpinrgMicroService_Eureka/" title="下一篇: Spring微服务之-软负载中心">
+                <i class="fa fa-angle-right"></i>
+            </a>
         
     </div>
 
