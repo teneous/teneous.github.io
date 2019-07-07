@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Syoka">
 <meta property="og:description" content="@(syoka) 数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别 Mysql锁机制 Mvcc redo/undo   数据库锁机制 索引结构 集群部署 分库分表的应对 常用函数  废话不多说，直接进入正题 ACID事物特性说到关系型数据库，那么不得不说它的特点了，那便是事物（ACID） ACID术语简介 Atomic 原子性：在一个事物中，所有操作要么全">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-07T03:19:25.000Z">
+<meta property="og:updated_time" content="2019-07-07T03:28:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库总结大纲">
 <meta name="twitter:description" content="@(syoka) 数据库总结大纲关系型数据库以Mysql为例子目录 ACID ACID术语简介 事物隔离级别 Mysql锁机制 Mvcc redo/undo   数据库锁机制 索引结构 集群部署 分库分表的应对 常用函数  废话不多说，直接进入正题 ACID事物特性说到关系型数据库，那么不得不说它的特点了，那便是事物（ACID） ACID术语简介 Atomic 原子性：在一个事物中，所有操作要么全">
@@ -460,7 +460,45 @@
 <li>什么是幻读？<br>事物A在不同时间读取同一数据返回不同结果</li>
 </ol>
 <p>情境分析</p>
-<p>时间线 | 事物 | 余额 | 转进 | 转出<br>-|-|-|-<br>T1 | A查询今天有没有交易 | |  |<br>T2 | B发生一笔转账100元 | 100 | 100 |<br>T3 | B事物提交 | 100 |  |<br>T4 | A查询再次查询发现有交易了 | | |</p>
+<table>
+<thead>
+<tr>
+<th>时间线</th>
+<th>事物</th>
+<th>余额</th>
+<th>转进</th>
+<th>转出</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>T1</td>
+<td>A查询今天有没有交易</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>T2</td>
+<td>B发生一笔转账100元</td>
+<td>100</td>
+<td>100</td>
+<td></td>
+</tr>
+<tr>
+<td>T3</td>
+<td>B事物提交</td>
+<td>100</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>T4</td>
+<td>A查询再次查询发现有交易了</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
 <p><strong>问题出T3,T4时刻，幻读多发生在先查后插。先查询没有，准备插入的时候发现又有了</strong></p>
 <p>区别:幻读看似和不可重复读有点类似，实则不一样，幻读发生是不同数据，是数据间隙的条数发生变化，而不可重复读则是对同一条数据的变化。</p>
 <p>  4.第一类第二类数据丢失<br>  这里就不举例子了，直接文字说明。</p>
@@ -488,8 +526,8 @@
 <p>  对于读的约束</p>
 <p>  ①InnoDB只会查找早于(包含等于)当前事务的系统版本号(DB_TRX_ID)的数据行。因为这样可以保证读到的数据行要么是在本次事务开始前已经存在的，要么是本次事务自身插入或修改过的。</p>
 <p>​  ②行的删除版本号(DB_ROLL_PTR)要么不存在，要么大于当前事务版本号(DB_TRX_ID)。这可以确保本次事务读取到的行，在本次事务开始之前依然存在。</p>
-<p>上述①②必须同时满足。图标分析参考文章<br><a href="https://www.cnblogs.com/liulvzhong/articles/9242299.html" target="_blank" rel="noopener">https://www.cnblogs.com/liulvzhong/articles/9242299.html</a><br><a href="https://segmentfault.com/a/1190000012650596" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012650596</a></p>
-<p>根据删除版本号的指针关联，可以看做一个链表，因此，我们可以找到任意记录的操作历史。</p>
+<p>上述①②必须同时满足。图标分析参考文章，感觉自己写的好垃圾，放上别人的参考链接</p>
+<p>10分钟入门易于简单理解文章:<a href="https://www.cnblogs.com/liulvzhong/articles/9242299.html" target="_blank" rel="noopener">https://www.cnblogs.com/liulvzhong/articles/9242299.html</a><br>相当不错的一篇文章:<a href="https://segmentfault.com/a/1190000012650596" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012650596</a></p>
 
       
     </div>
@@ -501,7 +539,7 @@
         <p><span>本文标题:</span><a href="/2019/07/05/MysqlÏà¹Ø/">数据库总结大纲</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页">Syoka</a></p>
         <p><span>发布时间:</span>2019-07-05, 14:53:29</p>
-        <p><span>最后更新:</span>2019-07-07, 11:19:25</p>
+        <p><span>最后更新:</span>2019-07-07, 11:28:11</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2019/07/05/MysqlÏà¹Ø/" title="数据库总结大纲">http://teneous.github.io/2019/07/05/MysqlÏà¹Ø/</a>
             <span class="copy-path" data-clipboard-text="原文: http://teneous.github.io/2019/07/05/MysqlÏà¹Ø/　　作者: Syoka" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
