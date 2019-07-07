@@ -255,10 +255,10 @@
 </nav>
       <div class="body-wrap">
   
-    <article id="post-Mysql相关" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MysqlÏà¹Ø" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/07/05/Mysql相关/" class="article-date">
+      <a href="/2019/07/05/MysqlÏà¹Ø/" class="article-date">
       <time datetime="2019-07-05T06:53:29.000Z" itemprop="datePublished">2019-07-05</time>
 </a>
 
@@ -274,7 +274,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/05/Mysql相关/">数据库总结大纲</a>
+      <a class="article-title" href="/2019/07/05/MysqlÏà¹Ø/">数据库总结大纲</a>
     </h1>
   
 
@@ -285,32 +285,23 @@
       
           
         <p>@(syoka)</p>
-<h2 id="数据库总结大纲"><a href="#数据库总结大纲" class="headerlink" title="数据库总结大纲"></a>数据库总结大纲</h2><h3 id="关系型数据库以Mysql为例子"><a href="#关系型数据库以Mysql为例子" class="headerlink" title="关系型数据库以Mysql为例子"></a>关系型数据库以Mysql为例子</h3><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a name="目录">目录</a></h2><ol>
-<li><a href="#ACID事物特性">ACID</a><ol start="11">
+<h2 id="数据库总结大纲"><a href="#数据库总结大纲" class="headerlink" title="数据库总结大纲"></a>数据库总结大纲</h2><h3 id="关系型数据库以Mysql为例子"><a href="#关系型数据库以Mysql为例子" class="headerlink" title="关系型数据库以Mysql为例子"></a>关系型数据库以Mysql为例子</h3><h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><h4 name="目录">目录</h4></h2><ol>
+<li><a href="#ACID事物特性">ACID</a><ol>
 <li><a href="#ACID术语简介">ACID术语简介</a></li>
 <li><a href="#事物隔离级别">事物隔离级别</a></li>
+<li><a href="#Mysql锁机制">Mysql锁机制</a></li>
+<li><a href>Mvcc</a></li>
+<li><a href>redo/undo</a></li>
 </ol>
 </li>
+<li><a href="#数据库锁机制">数据库锁机制</a></li>
+<li><a href>索引结构</a></li>
+<li><a href>集群部署</a></li>
+<li><a href>分库分表的应对</a></li>
+<li><a href>常用函数</a></li>
 </ol>
-<ol>
-<li><a href="#设计用分辨率">设计用分辨率</a></li>
-</ol>
-<ul>
-<li>数据库锁机制</li>
-<li>redo undo mvcc</li>
-<li>索引结构</li>
-<li>集群机制</li>
-<li>分库分表原理</li>
-<li>常用函数</li>
-</ul>
-<h4 id="非关系数据库以Redis为例子"><a href="#非关系数据库以Redis为例子" class="headerlink" title="非关系数据库以Redis为例子"></a>非关系数据库以Redis为例子</h4><ul>
-<li>redis原理</li>
-<li>数据结构+部分底层架构</li>
-<li>主从 哨兵 集群</li>
-<li>分布式锁（redis）</li>
-</ul>
 <p>废话不多说，直接进入正题</p>
-<h4 id="ACID事物特性"><a href="#ACID事物特性" class="headerlink" title="ACID事物特性"></a><a name="ACID事物特性">ACID事物特性</a></h4><p>说到关系型数据库，那么不得不说它的特点了，那便是事物（ACID）</p>
+<h4 id="ACID事物特性"><a href="#ACID事物特性" class="headerlink" title="ACID事物特性"></a><h4 name="ACID事物特性">ACID事物特性</h4></h4><p>说到关系型数据库，那么不得不说它的特点了，那便是事物（ACID）</p>
 <h5 id="ACID术语简介"><a href="#ACID术语简介" class="headerlink" title="ACID术语简介"></a><a name="ACID术语简介">ACID术语简介</a></h5><ul>
 <li><p>Atomic 原子性：在一个事物中，所有操作要么全部成功，要么全部失败</p>
 <p>例：A-&gt;B转账，A减少100元，则B必须增加100元</p>
@@ -413,14 +404,12 @@
 <th>余额</th>
 <th>转进</th>
 <th>转出</th>
-<th></th>
 </tr>
 </thead>
 <tbody><tr>
 <td>T1</td>
 <td>A读取余额100元</td>
 <td><strong>100</strong></td>
-<td></td>
 <td></td>
 <td></td>
 </tr>
@@ -430,14 +419,12 @@
 <td>100</td>
 <td>100</td>
 <td></td>
-<td></td>
 </tr>
 <tr>
 <td>T3</td>
 <td>B转账100元</td>
 <td>200</td>
 <td>100</td>
-<td></td>
 <td></td>
 </tr>
 <tr>
@@ -446,13 +433,11 @@
 <td>200</td>
 <td></td>
 <td></td>
-<td></td>
 </tr>
 <tr>
 <td><strong>T5</strong></td>
 <td>A读取余额100元</td>
-<td>** 200**</td>
-<td></td>
+<td><strong>200</strong></td>
 <td></td>
 <td></td>
 </tr>
@@ -464,9 +449,34 @@
 <p>情境分析</p>
 <p>时间线 | 事物 | 余额 | 转进 | 转出<br>-|-|-|-<br>T1 | A查询今天有没有交易 | |  |<br>T2 | B发生一笔转账100元 | 100 | 100 |<br>T3 | B事物提交 | 100 |  |<br>T4 | A查询再次查询发现有交易了 | | |</p>
 <p><strong>问题出T3,T4时刻，幻读多发生在先查后插。先查询没有，准备插入的时候发现又有了</strong></p>
-<p>区别:幻读看似和不可重复读有点类似，实则不一样，幻读针对是不同数据，是读取数据的条数发生变化，不可重复读则是对同一条数据的变化。</p>
-<p>只是点</p>
-<h5 id="知识点1-2-mysql如何确保各个特性"><a href="#知识点1-2-mysql如何确保各个特性" class="headerlink" title="知识点1.2 mysql如何确保各个特性"></a>知识点1.2 mysql如何确保各个特性</h5><p>mysql是基于什么方式实现上述的ACID？</p>
+<p>区别:幻读看似和不可重复读有点类似，实则不一样，幻读发生是不同数据，是数据间隙的条数发生变化，而不可重复读则是对同一条数据的变化。</p>
+<p>  4.第一类第二类数据丢失<br>  这里就不举例子了，直接文字说明。</p>
+<p>  第一类更新丢失<br>  事物A查询账户100元，B向其转入200元，B在提交了事物，事物A在取出100，然后事物A发生了事物回滚操作，那么B转的200元就不见了，这就是第一类事物更新丢失。</p>
+<p>  第二类事物更新丢失<br>  事物A查询账户100元，B向其转入200元，B在提交了事物，事物A在转入100，然后事物A提交事物，此时越200元，B转入的200元被覆盖了，这就是第二类事物更新丢失。</p>
+<p>从上面来看事物在并发情况下问题蛮多，如何保证事物的正确性，可以采取序列化的方式，保证事物串性化执行，但是此方法效率太低。另一种方法是加锁，但是一旦加了表锁，不仅仅是写，读也锁住这是不允许的，况且innodb可以代替IMysam的重大原因之一也是支持行锁。如何在数据准确性和效率之间取舍值得考量。那么有没有一种在尽可能不锁的情况下能够解决并发的问题呢？<br>幸运的是针对innodb引擎，Mysql提供Mvcc来解决在RR(可重复度)的事物隔离界别下也不会发生幻读的问题。</p>
+<h5 id="知识点1-2-Mvcc介绍"><a href="#知识点1-2-Mvcc介绍" class="headerlink" title="知识点1.2 Mvcc介绍"></a>知识点1.2 Mvcc介绍</h5><p>Mvcc(Multi-Version Concurrency Control)多版本并发控制是用于解决并发问题的一种控制方法。</p>
+<ol>
+<li>什么是Mvcc</li>
+</ol>
+<p>  <strong>简单的来说就是针对每一个时刻有一个快照副本</strong>。为什么出现幻读和可重复度的本质原因就是因为同一个事物下，在不同时间点，所看到的数据发生了变化(被其他事物修改了)。反过来说，从某一个事物开始的时间点起，这个事物不能读到后面其他事物的修改的话，那么它就不会出现并发问题（读读，读写，写读）。</p>
+<ol start="2">
+<li><p><strong>它的约束条件</strong>：<br>Mvcc适用于innodb，且工作在读已提交和可重复读的隔离级别下。因为在这两种情况下可以保证并发条件下，事物确确实实是提交了。而读未提交总是读取最新数据，从而不能保证当前事物数据的版本号。且序列化则是加锁串行话，没有必要。</p>
+</li>
+<li><p><strong>实现原理</strong><br>针对每一行它会额外存储三个隐藏字段:</p>
+<blockquote>
+<ol>
+<li>DB_TRX_ID：6byte，每处理一个事务，其值自动+1 （起始版本号）</li>
+<li>DB_ROLL_PTR: 7byte,指向（回滚段）的undo log记录（假设别名删除时间(删除版本号))</li>
+<li>DB_ROW_ID 随着行数据增加而增加，如果InnoDB自动生成聚集索引，则该索引包含行ID值。否则，db_row_id列不会出现在任何索引中。（取自官方文档）。意为如果我们有自己的唯一索引/主键则db_row_id不会被包含，否者将使用innodb生成的row_id。</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<p>  对于读的约束</p>
+<p>  ①InnoDB只会查找早于(包含等于)当前事务的系统版本号(DB_TRX_ID)的数据行。因为这样可以保证读到的数据行要么是在本次事务开始前已经存在的，要么是本次事务自身插入或修改过的。</p>
+<p>​  ②行的删除版本号(DB_ROLL_PTR)要么不存在，要么大于当前事务版本号(DB_TRX_ID)。这可以确保本次事务读取到的行，在本次事务开始之前依然存在。</p>
+<p>上述①②必须同时满足。图标分析参考文章<br><a href="https://www.cnblogs.com/liulvzhong/articles/9242299.html" target="_blank" rel="noopener">https://www.cnblogs.com/liulvzhong/articles/9242299.html</a><br><a href="https://segmentfault.com/a/1190000012650596" target="_blank" rel="noopener">https://segmentfault.com/a/1190000012650596</a></p>
+<p>根据删除版本号的指针关联，可以看做一个链表，因此，我们可以找到任意记录的操作历史。</p>
 
       
     </div>
