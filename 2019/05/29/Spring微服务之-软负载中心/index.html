@@ -17,48 +17,51 @@
   runtime_unit: 'days'
 
   
-}</script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><span class="toc-number">1.</span> <span class="toc-text">序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</span></a></li></ol><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载中心出现的契机"><span class="toc-number"></span> <span class="toc-text">软负载中心出现的契机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载服务内聚的构建（以下统称注册中心）"><span class="toc-number"></span> <span class="toc-text">软负载服务内聚的构建（以下统称注册中心）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><span class="toc-number"></span> <span class="toc-text">想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><span class="toc-number"></span> <span class="toc-text">光有结构还不够，还需了解注册中心服务框架如何与客户端结合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载对服务状态的检测"><span class="toc-number"></span> <span class="toc-text">软负载对服务状态的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载的性能策略"><span class="toc-number"></span> <span class="toc-text">软负载的性能策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册中心的集群化"><span class="toc-number"></span> <span class="toc-text">注册中心的集群化</span></a></li></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/Photo/post.png)"><div id="page-header"><span class="pull-left"> <a class="blog_title" id="site-name" href="/">Syoka</a></span><div class="open toggle-menu pull-right"><div class="menu-icon-first"></div><div class="menu-icon-second"></div><div class="menu-icon-third"></div></div><span class="pull-right menus"><div class="mobile_author_icon"><img class="lozad" data-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'"><div class="mobile_author-info__description"></div></div><hr><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a><a class="site-page" href="/playlist/"><i class="fa-fw  fa fa-music"></i><span> 音乐</span></a><script>document.body.addEventListener('touchstart', function(){ });</script></div></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Spring微服务之-软负载中心</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> Created 2019-05-29<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> Updated 2019-07-16</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/微服务/">微服务</a></span></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><p>@(syoka) </p>
+}</script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div class="auto_open" id="sidebar"><div class="sidebar-toc"><div class="sidebar-toc__title">Catalog</div><div class="sidebar-toc__progress"><span class="progress-notice">You've read</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-6"><a class="toc-link" href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><span class="toc-number">1.</span> <span class="toc-text">序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</span></a></li></ol><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载中心出现的契机"><span class="toc-number"></span> <span class="toc-text">软负载中心出现的契机</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据？"><span class="toc-number"></span> <span class="toc-text">想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据？</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#光有结构还不够，还需了解服务框架如何与客户端结合"><span class="toc-number"></span> <span class="toc-text">光有结构还不够，还需了解服务框架如何与客户端结合</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载对服务状态的检测"><span class="toc-number"></span> <span class="toc-text">软负载对服务状态的检测</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#软负载的容错策略和性能提升方案"><span class="toc-number"></span> <span class="toc-text">软负载的容错策略和性能提升方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#客户端本地缓存的同步方法"><span class="toc-number"></span> <span class="toc-text">客户端本地缓存的同步方法:</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#注册中心的集群化"><span class="toc-number"></span> <span class="toc-text">注册中心的集群化</span></a></li></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://cdn.jsdelivr.net/gh/jerryc127/CDN@latest/Photo/post.png)"><div id="page-header"><span class="pull-left"> <a class="blog_title" id="site-name" href="/">Syoka</a></span><div class="open toggle-menu pull-right"><div class="menu-icon-first"></div><div class="menu-icon-second"></div><div class="menu-icon-third"></div></div><span class="pull-right menus"><div class="mobile_author_icon"><img class="lozad" data-src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'"><div class="mobile_author-info__description"></div></div><hr><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa fa-home"></i><span> 首页</span></a><a class="site-page" href="/archives/"><i class="fa-fw fa fa-archive"></i><span> 时间轴</span></a><a class="site-page" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a><a class="site-page" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a><a class="site-page" href="/playlist/"><i class="fa-fw  fa fa-music"></i><span> 音乐</span></a><script>document.body.addEventListener('touchstart', function(){ });</script></div></span><span class="pull-right"></span></div><div id="post-info"><div id="post-title"><div class="posttitle">Spring微服务之-软负载中心</div></div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> Created 2019-05-29<span class="post-meta__separator">|</span><i class="fa fa-history" aria-hidden="true"></i> Updated 2019-07-25</time><span class="post-meta__separator mobile_hidden">|</span><span class="mobile_hidden"><i class="fa fa-inbox post-meta__icon" aria-hidden="true"></i><a class="post-meta__categories" href="/categories/微服务/">微服务</a></span></div></div></div><div class="layout layout_post" id="content-inner">   <article id="post"><div class="article-container" id="post-content"><p>@(syoka)</p>
 <h6 id="序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑"><a href="#序言-本篇文章不会教你如何搭建一个eureka（需要请查看spring-io官网用例），而是简单说说自己的理解和遇到的一些坑" class="headerlink" title="序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑"></a>序言:本篇文章不会教你如何搭建一个eureka（需要请查看spring.io官网用例），而是简单说说自己的理解和遇到的一些坑</h6><hr>
-<h4 id="软负载中心出现的契机"><a href="#软负载中心出现的契机" class="headerlink" title="软负载中心出现的契机"></a>软负载中心出现的契机</h4><p>如果我们有两台服务器，它们所提供的功能是一样的。我们使用Nginx等服务来该记录服务的地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      server 192.168.1.11:8080;</span><br><span class="line">      server 192.168.1.22:8080;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="软负载中心出现的契机"><a href="#软负载中心出现的契机" class="headerlink" title="软负载中心出现的契机"></a>软负载中心出现的契机</h4><p>假设现在我们有两台服务器，它们所提供的功能是一样的。我们可以使用Nginx或lvs等服务来该记录服务的物理地址和端口，当有消费者想要获取服务地址时，我们将类似以下信息返回消费端</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">      server 192.168.1.11:8080;</span><br><span class="line">      server 192.168.1.22:8080;</span><br><span class="line">      ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>从这里体现出了负载中心的第一个特性，服务内聚</strong></p>
-<p>在内部系统或者服务少的情况下，上述方法确实能够有效的解决问题（可控制服务出入口，适用支付金融业），但是面对分布式环境中对多服务管理的话这么做有两个问题:</p>
+<p><strong>上述体现出了负载中心的第一个特性，服务内聚</strong></p>
+<p>在内部系统或者服务少的情况下，上述方法确实能够有效的解决问题（比如，可严格控制服务出入口，适用支付金融业），但是面对分布式环境中这么做有两个问题:</p>
 <ol>
-<li><p>复杂:新增服务不是通过实例启动自动完成，而是需要手动维护。且直接映射物理服务，这对于DevOps人员来说并不友好。</p>
+<li><p>复杂度:新增新服务不是通过实例启动自动注册完成，而是需要手动维护。且直接映射物理服务，这对于DevOps人员来说并不友好。</p>
 </li>
-<li><p>单点故障：一旦负载中心挂了，其余所有消费端获取服务地址都将失败，对于此类问题，可以考虑加入一个【从负载均衡器】，在主负载器出现问题时进行故障切换。</p>
+<li><p>单点故障：一旦负载中心挂了，所有消费端获取服务地址都将失败，虽然我们可以考虑加入一个【从负载均衡器】监听主负载器，在出现问题时进行故障切换。但总的来看问题点都集中于此。</p>
 </li>
 </ol>
-<p><strong>因此这里我们要解决的第一个痛点就是一个自动检查新老服务上下线的软负载中心(内聚体现:注册中心)</strong></p>
-<h4 id="软负载服务内聚的构建（以下统称注册中心）"><a href="#软负载服务内聚的构建（以下统称注册中心）" class="headerlink" title="软负载服务内聚的构建（以下统称注册中心）"></a>软负载服务内聚的构建（以下统称注册中心）</h4><h5 id="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"><a href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据" class="headerlink" title="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据"></a>想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据</h5><p>从文章开头的静态地址来看<br>，我们可以看出</p>
+<p>因此这里我们要解决的第一个痛点就是一个<strong>自动检测服务上下线的软负载中心</strong>(内聚体现:注册中心)</p>
+<p><strong>软负载服务内聚的构建（以下统称注册中心）</strong></p>
+<h5 id="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据？"><a href="#想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据？" class="headerlink" title="想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据？"></a>想要构建一个注册中心，首先得了解对于注册中心来说，它需要服务提供者提供什么样的元数据？</h5><p>从文章开头所给的用例来看：</p>
 <ul>
-<li>必须提供服务端的物理地址ip以及端口<br>（一般为了防止直接对物理地址的操作，会再抽象一层逻辑服务名）</li>
-<li>为确保服务提供者的高可用，提供者一般也是采用集群部署，因此我们使用GroupId来标识一个集群</li>
+<li>必须提供服务提供端的物理地址以及端口。</li>
+<li>为确保服务提供者的高可用，提供者一般也需采用集群部署，此外，一般为了防止直接对物理地址的操作，会再抽象一层逻辑服务名。因此我们使用逻辑名(GroupId)来标识一个集群。</li>
 </ul>
-<p>最终从结构上来说：<br><strong>我们需要一个groupid来充当一组服务的逻辑名，每组groupid里存放着每个实例的物理地址以及端口</strong></p>
-<h5 id="光有结构还不够，还需了解注册中心服务框架如何与客户端结合"><a href="#光有结构还不够，还需了解注册中心服务框架如何与客户端结合" class="headerlink" title="光有结构还不够，还需了解注册中心服务框架如何与客户端结合"></a>光有结构还不够，还需了解注册中心服务框架如何与客户端结合</h5><p>这里给出2钟:</p>
+<p>最终从结构上来说：<strong>我们需要一个GroupId来充当一组服务的逻辑名，每组GroupId里存放着每个实例的物理地址以及端口</strong></p>
+<p>注：在JAVA中使用ConcurrentHashMap来存放是最为合适的。</p>
+<h5 id="光有结构还不够，还需了解服务框架如何与客户端结合"><a href="#光有结构还不够，还需了解服务框架如何与客户端结合" class="headerlink" title="光有结构还不够，还需了解服务框架如何与客户端结合"></a>光有结构还不够，还需了解服务框架如何与客户端结合</h5><p>这里给出2钟:</p>
 <ol>
-<li>注册中心框架以jar包的方式和服务端一起启动，由客户端发起RESTFUL请求到注册中心服务端完成注册（eureka就是采用此方案）。</li>
-<li>注册中心框架绑定到容器中。服务被在容器中启动，可以被注册中心感知。</li>
+<li>服务框架以jar包的形式被服务端依赖，并随服务端一起启动，由客户端发起REST请求到注册中心服务端完成注册（eureka就是采用此方案）。</li>
+<li>注册中心框架绑定到容器中。服务被在容器中启动，可以被注册中心感知（略）。</li>
 </ol>
-<h4 id="软负载对服务状态的检测"><a href="#软负载对服务状态的检测" class="headerlink" title="软负载对服务状态的检测"></a>软负载对服务状态的检测</h4><p>注册中心需要感知所有服务的当前状态，防止向消费者返回已经下线或是有问题的服务地址，这个需要提供端定时向注册中心汇报自己的当前状态（称为:心跳包）</p>
-<p>当然可能因为网络延时或者当前软负载中心负载很高，注册中心不能及时收到心跳包。此时不应该直接剔除服务并删除注册列表，毕竟注册一个服务所耗的资源还是很高的。因此注册中心应该有一定弹性，在没有收到心跳包也应该在一定时间内保留注册信息，并另开一个线程监视器再一定时间内继续监视，如还收不到心跳包，则判定下线。</p>
-<h4 id="软负载的性能策略"><a href="#软负载的性能策略" class="headerlink" title="软负载的性能策略"></a>软负载的性能策略</h4><p>服务提供者将信息注册到注册中心，如果注册中心出问题，又没有容灾策略，那么所有消费者都获取不到服务提供者的位置。因此，所有服务消费者会在本地缓存一份。</p>
+<h4 id="软负载对服务状态的检测"><a href="#软负载对服务状态的检测" class="headerlink" title="软负载对服务状态的检测"></a>软负载对服务状态的检测</h4><p>之前我们说到了新服务会在启动时发起一个REST注册请求，那么肯定也会在下线发起一个REST注销请求。但是一旦<br>注册成功后，注册中心就会认为服务有效可达，但新服务突然崩溃或者负载很高，此刻注册中心无法感知。若在将问题服务地址推送给消费者则会出现连环问题。</p>
+<p>因此为了解决上面问题，在新服务注册完之后就会建立起一个长连接，由客户端框架定时向注册中心汇报自己的当前状态（称为:心跳包）,注册中心根据心跳包补偿机制来判断服务提供者的有效性。</p>
+<p>当然可能因为偶然的网络波动或者系统负载急剧升高，导致注册中心不能及时收到心跳包。如果立刻剔除服务并删除注册列表未免有点小题大做了。毕竟注册一个新服务所耗的资源还是很高的。<strong>因此，注册中心应该伴有一定的错误容忍性。在没有收到心跳包也应该在一定时间内保留其注册信息，并另开一个监视线程在一定时间内继续监视，如还收不到心跳包，则判定下线。</strong></p>
+<h4 id="软负载的容错策略和性能提升方案"><a href="#软负载的容错策略和性能提升方案" class="headerlink" title="软负载的容错策略和性能提升方案"></a>软负载的容错策略和性能提升方案</h4><p>刚才说了一些服务提供者和消费者的问题，现在我们说说负载中心存在的问题。</p>
+<p>因为服务提供者将信息都注册到注册中心，一旦注册中心出问题，又没有容灾策略，那么所有消费者都获取不到服务提供者的位置。因此，所有服务消费者会在第一次建立连接后，本地缓存一份注册表。</p>
 <p>这样做的好处：</p>
 <ol>
-<li>注册中心挂了也可以使用本地缓存直接请求。</li>
+<li>注册中心挂了也可以使用本地缓存直接请求服务端。</li>
 <li>提升了效率（不用每次请求都向注册中心获取服务地址，降低注册中心的负载，避免网络资源的浪费）</li>
 </ol>
-<p>客户端本地缓存:注册中心服务注册表发生变换时需要通知客户端刷新本地缓存，此处使用全量更新(实现简单)，还是增量更新(实现复杂)是可以权衡的。eureka采用增量更新。</p>
-<p><strong>第二个痛点就是容灾策略，采用集群部署来解决</strong></p>
+<h4 id="客户端本地缓存的同步方法"><a href="#客户端本地缓存的同步方法" class="headerlink" title="客户端本地缓存的同步方法:"></a>客户端本地缓存的同步方法:</h4><p>服务注册表发生变换时需要通知客户端刷新本地缓存，此处使用全量更新(实现简单)，还是增量更新(实现复杂)是可以权衡的。eureka采用增量更新。</p>
+<p><strong>第二个痛点就是服务提供者的容灾策略，一般采用集群部署来解决</strong></p>
 <h4 id="注册中心的集群化"><a href="#注册中心的集群化" class="headerlink" title="注册中心的集群化"></a>注册中心的集群化</h4><p>注册中心的统一化管理主要有两种实现方式</p>
-<p> <strong>1.通过相互注册的同步方式(eureka就是采用这种方式)。</strong></p>
-<p>例:A，B两个注册中心，把B当成一个服务提供者注册到A中，A也当成提供者注册在B中。这样两个注册中心就可保持同步，以此类推，有N个注册中心那么，每个注册中心需要完成N-1次注册即可。</p>
-<p>这么做的好处是可以复用功能，也易于理解。但是从侧面也反映出它的缺点，同步效率会大大降低。<br>为了解决效率的问题，并且接受部分服务同步延时，可以选择类似batch批量同步。</p>
+<p><strong>1.通过相互注册的同步方式(eureka就是采用这种方式)。</strong></p>
+<p>例:A，B两个注册中心，把B当成一个服务提供者注册到A中，A也注册在B中。通过相互注册，这样两个注册中心就可保持数据同步。</p>
+<p>这么做的好处是可以复用功能，也易于理解。但是从侧面也反映出它的缺点，如果在T时间内，存在N个注册中心，每个注册中心需要完成N-1次通信，同步效率会大大降低。为了解决效率的问题，并且接受部分服务同步延时，可以选择类似batch批量同步。</p>
 <p><strong>2.通过数据内聚的管理方式</strong></p>
-<p>将所有的地址数据聚合在一起，所有注册中心从聚合服务获取，可以保证软负载服务的无状态，但是也得考虑如果聚合服务出现故障时的备用策略。</p>
-<p>感觉自己写的很捞，后面有时间再改改吧。</p>
+<p>将所有的地址数据聚合在一起作为聚合服务，所有注册中心从聚合服务获取，这样不会存在相互同步锁出现的资源浪费问题，同时保证了软负载服务的无状态。但容易出现单点故障，因此也得考虑备用策略。</p>
 <hr>
 <p>参考文档:</p>
 <ul>
